@@ -1,0 +1,8 @@
+prefix=/Users/MohitSridhar/ros_pkgs/src/namespace_mux/build/devel
+
+Name: namespace_mux
+Description: Description of namespace_mux
+Version: 0.0.0
+Cflags: 
+Libs: -L/Users/MohitSridhar/ros_pkgs/src/namespace_mux/build/devel/lib -lnamespace_mux
+Requires: roscpp rospy rviz std_srvs topic_tools
