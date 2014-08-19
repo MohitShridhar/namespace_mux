@@ -1,7 +1,0 @@
-set(_CATKIN_CURRENT_PACKAGE "namespace_mux")
-set(namespace_mux_MAINTAINER "MohitSridhar <MohitSridhar@todo.todo>")
-set(namespace_mux_DEPRECATED "")
-set(namespace_mux_VERSION "0.0.0")
-set(namespace_mux_BUILD_DEPENDS "roscpp" "rospy" "rviz" "std_srvs" "topic_tools")
-set(namespace_mux_RUN_DEPENDS "roscpp" "rospy" "rviz" "std_srvs" "topic_tools")
-set(namespace_mux_BUILDTOOL_DEPENDS "catkin")
