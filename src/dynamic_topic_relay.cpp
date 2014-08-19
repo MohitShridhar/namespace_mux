@@ -20,20 +20,12 @@ void DynamicTopicRelay::in_cb(const boost::shared_ptr<topic_tools::ShapeShifter 
 {
   if (!g_advertised)
   {
-    g_pub = msg->advertise(*g_node, g_output_topic, 10);
+    g_pub = msg->advertise(*g_node, g_output_topic, 100);
     g_advertised = true;
     ROS_INFO("%s advertised as %s\n", g_input_topic.c_str(), g_output_topic.c_str());
   }
 
   g_pub.publish(msg);
-}
-
-void DynamicTopicRelay::setOutputTopic(std::string newOutputTopic)
-{
-	g_output_topic = newOutputTopic;
-	g_advertised = false;
-
-	g_pub.shutdown();
 }
 
 std::string DynamicTopicRelay::getInputTopic()
@@ -50,14 +42,3 @@ std::string DynamicTopicRelay::getMainTopic()
 {
 	return g_main_topic;
 }
-
-
-// int main(int argc, char **argv)
-// {
-// 	ros::init(argc, argv, "test");
-
-// 	DynamicTopicRelay nsMux("/sesto0/odom", "/rviz/odom");
-
-// 	return 0;
-// }
-

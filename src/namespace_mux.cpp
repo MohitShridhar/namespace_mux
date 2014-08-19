@@ -63,11 +63,11 @@ void NamespaceMux::setupSubscribers()
 		std::string inputTopic = "/" + currRobotNs + mainTopic;
 		std::string outputTopic = "/" + rviz_namespace + mainTopic;
 		
-		DynamicTopicRelay* relayedTopic = new DynamicTopicRelay(rosNode, mainTopic, inputTopic, outputTopic); 
-		ros::Subscriber inputSubscription = rosNode->subscribe<topic_tools::ShapeShifter>(relayedTopic->getInputTopic(), 10, &DynamicTopicRelay::in_cb, relayedTopic);
+		DynamicTopicRelay* relayedSubTopic = new DynamicTopicRelay(rosNode, mainTopic, inputTopic, outputTopic); 
+		ros::Subscriber inputSubscription = rosNode->subscribe<topic_tools::ShapeShifter>(relayedSubTopic->getInputTopic(), 10, &DynamicTopicRelay::in_cb, relayedSubTopic);
 		
 		inputSubscriptions.push_back(inputSubscription);
-		relayedSubs.push_back(relayedTopic);
+		relayedSubs.push_back(relayedSubTopic);
 	}
 }
 
@@ -78,11 +78,12 @@ void NamespaceMux::setupPublishers()
 		std::string inputTopic = "/" + rviz_namespace + mainTopic;
 		std::string outputTopic = "/" + currRobotNs + mainTopic;
 
-		DynamicTopicRelay* relayedTopic = new DynamicTopicRelay(rosNode, mainTopic, inputTopic, outputTopic);
-		ros::Subscriber inputPublication = rosNode->subscribe<topic_tools::ShapeShifter>(relayedTopic->getInputTopic(), 10, &DynamicTopicRelay::in_cb, relayedTopic);
+		DynamicTopicRelay* relayedPubTopic = new DynamicTopicRelay(rosNode, mainTopic, inputTopic, outputTopic);
+
+		ros::Subscriber inputPublication = rosNode->subscribe<topic_tools::ShapeShifter>(relayedPubTopic->getInputTopic(), 10, &DynamicTopicRelay::in_cb, relayedPubTopic);
 
 		inputPublications.push_back(inputPublication);
-		relayedPubs.push_back(relayedTopic);
+		relayedPubs.push_back(relayedPubTopic);
 	}
 }
 
@@ -113,10 +114,12 @@ void NamespaceMux::switchMuxes()
 
 void NamespaceMux::switchPublishers()
 {	
-	for (std::vector<DynamicTopicRelay*>::iterator it = relayedPubs.begin(); it != relayedPubs.end(); ++it) {
-		DynamicTopicRelay* relayedTopic = *it;
-		relayedTopic->setOutputTopic("/" + currRobotNs + relayedTopic->getMainTopic());
-	}	
+	for (std::vector<ros::Subscriber>::iterator it = inputPublications.begin(); it != inputPublications.end(); ++it) {
+		(*it).shutdown();
+	}
+
+	inputPublications.clear();
+	setupPublishers();
 }
 
 void NamespaceMux::switchSubscribers()
