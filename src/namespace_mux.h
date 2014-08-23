@@ -26,7 +26,7 @@
 
 #include <std_msgs/String.h>
 
-#define MUX_CONTROL_TOPIC "/rviz_mux/control"
+#define MUX_CONTROL_TOPIC "/namespace_mux/control"
 
 class DynamicTopicRelay;
 

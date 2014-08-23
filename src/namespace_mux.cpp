@@ -45,15 +45,15 @@ void NamespaceMux::parseParams()
 {
 	rosNode = new ros::NodeHandle("");	
 
-	rosNode->getParam("/rviz_mux/robot_namespace_ref", robot_namespace_ref);
+	rosNode->getParam("/namespace_mux/robot_namespace_ref", robot_namespace_ref);
 	ROS_INFO("PARAM: robot_namespace_ref - %s\n", robot_namespace_ref.c_str());
 
-	rosNode->getParam("/rviz_mux/rviz_namespace", rviz_namespace);
+	rosNode->getParam("/namespace_mux/rviz_namespace", rviz_namespace);
 	ROS_INFO("PARAM: rviz_namespace - %s\n", rviz_namespace.c_str());
 
-	rosNode->getParam("/rviz_mux/active_bots", active_bots);
-	rosNode->getParam("/rviz_mux/subscribed_topics", subscribed_topics);
-	rosNode->getParam("/rviz_mux/published_topics", published_topics);
+	rosNode->getParam("/namespace_mux/active_bots", active_bots);
+	rosNode->getParam("/namespace_mux/subscribed_topics", subscribed_topics);
+	rosNode->getParam("/namespace_mux/published_topics", published_topics);
 
 	if (active_bots.empty()) {
 		ROS_ERROR("No bots are active. Dynamic Topic relay disabled\n");
