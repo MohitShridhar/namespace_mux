@@ -45,11 +45,11 @@ void NamespaceMux::parseParams()
 {
 	rosNode = new ros::NodeHandle("");	
 
-	rosNode->getParam("/namespace_mux/robot_namespace_ref", robot_namespace_ref);
-	ROS_INFO("PARAM: robot_namespace_ref - %s\n", robot_namespace_ref.c_str());
+	rosNode->getParam("/namespace_mux/incoming_ns_prefix", incoming_ns_prefix);
+	ROS_INFO("PARAM: incoming_ns_prefix - %s\n", incoming_ns_prefix.c_str());
 
-	rosNode->getParam("/namespace_mux/rviz_namespace", rviz_namespace);
-	ROS_INFO("PARAM: rviz_namespace - %s\n", rviz_namespace.c_str());
+	rosNode->getParam("/namespace_mux/outgoing_ns", outgoing_ns);
+	ROS_INFO("PARAM: outgoing_ns - %s\n", outgoing_ns.c_str());
 
 	rosNode->getParam("/namespace_mux/active_bots", active_bots);
 	rosNode->getParam("/namespace_mux/subscribed_topics", subscribed_topics);
@@ -78,7 +78,7 @@ void NamespaceMux::setupSubscribers()
 	for (std::vector<std::string>::iterator it = subscribed_topics.begin(); it != subscribed_topics.end(); ++it) {
 		std::string mainTopic = (*it).c_str();
 		std::string inputTopic = "/" + currRobotNs + mainTopic;
-		std::string outputTopic = "/" + rviz_namespace + mainTopic;
+		std::string outputTopic = "/" + outgoing_ns + mainTopic;
 		
 		DynamicTopicRelay* relayedSubTopic = new DynamicTopicRelay(rosNode, mainTopic, inputTopic, outputTopic); 
 		ros::Subscriber inputSubscription = rosNode->subscribe<topic_tools::ShapeShifter>(relayedSubTopic->getInputTopic(), 10, &DynamicTopicRelay::in_cb, relayedSubTopic);
@@ -92,7 +92,7 @@ void NamespaceMux::setupPublishers()
 {
 	for (std::vector<std::string>::iterator it = published_topics.begin(); it != published_topics.end(); ++it) {
 		std::string mainTopic = (*it).c_str();
-		std::string inputTopic = "/" + rviz_namespace + mainTopic;
+		std::string inputTopic = "/" + outgoing_ns + mainTopic;
 		std::string outputTopic = "/" + currRobotNs + mainTopic;
 
 		DynamicTopicRelay* relayedPubTopic = new DynamicTopicRelay(rosNode, mainTopic, inputTopic, outputTopic);
@@ -151,7 +151,7 @@ void NamespaceMux::switchSubscribers()
 
 int main(int argc, char **argv)
 {	
-	ros::init(argc, argv, "rviz_namespace_mux");
+	ros::init(argc, argv, "outgoing_ns_mux");
 
 	NamespaceMux nsMux;
 	nsMux.manageTopics();

@@ -35,7 +35,7 @@ class NamespaceMux
 	private:
 		ros::NodeHandle* rosNode;
 		ros::Subscriber control_sub;
-		std::string robot_namespace_ref, rviz_namespace;
+		std::string incoming_ns_prefix, outgoing_ns;
 		
 		std::vector<std::string> active_bots, subscribed_topics, published_topics;
 		std::vector<DynamicTopicRelay*> relayedSubs, relayedPubs;
