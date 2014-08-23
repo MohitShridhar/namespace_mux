@@ -4,9 +4,9 @@ project(namespace_mux)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
-  rviz
   std_srvs
   topic_tools
+  tf
 )
 
 find_package(Boost 1.40 COMPONENTS program_options REQUIRED)
@@ -14,7 +14,7 @@ find_package(Boost 1.40 COMPONENTS program_options REQUIRED)
 
 catkin_package(
   LIBRARIES namespace_mux
-  CATKIN_DEPENDS roscpp rospy rviz std_srvs topic_tools
+  CATKIN_DEPENDS roscpp rospy tf std_srvs topic_tools
 )
 
 include_directories(
