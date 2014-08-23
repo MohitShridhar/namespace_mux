@@ -1,4 +1,13 @@
-namespace_mux
+ROS Topic Namespace Multiplexer
 =============
 
-ROS Topic namespace - Dynamic Multiplexer
+Topic-tools [mux](http://wiki.ros.org/topic_tools/mux) allows you to route many incoming topics into one outgoing topic. But this package allows you multiplex both many-to-one connections & one-to-many connections.
+
+![many to one](images/many_to_one.png)
+
+![one to many](images/one_to_many.png)
+
+This might be useful when you want to control multiple robots using Rviz (see [multi_map_navigation](https://github.com/MohitShridhar/multi_map_navigation)).
+
+
+
