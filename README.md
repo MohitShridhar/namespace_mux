@@ -62,7 +62,7 @@ Example:
 `/namespace_mux/incoming_ns_prefix` is the namespace prefix of the incoming topics. For example: robot0/odom has the prefix "robot". `/namespace_mux/outgoing_ns` is the desired namespace of the outgoing topics (incoming subscriptions or outgoing publications). `/namespace_mux/subscribed_topics` lists the input of **many-to-one** connections. `/namespace_mux/published_topics` lists the input of **one-to-many** connections.
 
 ### Fake Map-Frame Publisher
-If you multiplex map topics (many to one connection), you will notice that each map has it's own namespaced tf frame-id, eg: 'robot0/map'. This might inconvenience you when you want publish things like goals with map frame-ids based on the currently active map. This node will create a fake tf link between namespaced frame-ids.
+If you multiplex map topics (many to one connection), you will notice that each map has it's own namespaced tf frame-id, eg: 'robot0/map'. This might inconvenience you when you want publish things like goals with map frame-ids based on the currently active map. Use this tool to create a fake tf link between the namespaced frame-ids.
 ```xml
 <node name="fake_tf_broadcaster" pkg="namespace_mux" type="fake_tf_broadcaster" output="screen">
 	<rosparam param="/fake_tf_broadcaster/pub_freq">50</rosparam>
