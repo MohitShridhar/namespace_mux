@@ -22,4 +22,4 @@ $ catkin_make --pkg namespace_mux
 
 ## Guide
 
-See [wiki](./wiki/User-Guide) for more details.
+See [wiki](https://github.com/MohitShridhar/namespace_mux/wiki/User-Guide) for more details.
