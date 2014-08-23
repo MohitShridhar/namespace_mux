@@ -32,7 +32,7 @@ Example:
   <rosparam param="/namespace_mux/outgoing_ns">"rviz"</rosparam>
 
   <rosparam param="/namespace_mux/active_bots">[
-    "robot0"
+    "robot0", "robot1"
     ]</rosparam>
 
   <rosparam param="/namespace_mux/subscribed_topics">[
@@ -59,5 +59,16 @@ Example:
 
 </node>
 ```
+`/namespace_mux/incoming_ns_prefix` is the namespace prefix of the incoming topics. For example: robot0/odom has the prefix "robot". `/namespace_mux/outgoing_ns` is the desired namespace of the outgoing topics (incoming subscriptions or outgoing publications). `/namespace_mux/subscribed_topics` lists the input of **many-to-one** connections. `/namespace_mux/published_topics` lists the input of **one-to-many** connections.
 
-
+### Fake Map-Frame Publisher
+If you multiplex map topics (many to one connection), you will notice that each map has it's own namespaced tf frame-id, eg: 'robot0/map'. This might inconvenience you when you want publish things like goals with map frame-ids based on the currently active map. This node will create a fake tf link between namespaced frame-ids.
+```xml
+<node name="fake_tf_broadcaster" pkg="namespace_mux" type="fake_tf_broadcaster" output="screen">
+	<rosparam param="/fake_tf_broadcaster/pub_freq">50</rosparam>
+	<rosparam param="/fake_tf_broadcaster/input_curr_frame_ids">["robot0/map", "robot1/map"]</rosparam>
+	<rosparam param="/fake_tf_broadcaster/output_fake_frame_ids">["rviz/map"]</rosparam>
+	<rosparam param="/fake_tf_broadcaster/output_tf_offset">[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]</rosparam>    
+</node>
+```
+Here we create a fake link between `robot0/map` & `robot1/map` with a zero-offset. `/fake_tf_broadcaster/input_curr_frame_ids` contains a list of all the map frame-ids you want link together. `/fake_tf_broadcaster/output_fake_frame_ids` contains the name of the resultant frame-id. *Note:* This will become your 'fixed frame' in Rviz. `/fake_tf_broadcaster/output_tf_offset` is set to zero-origin, if the maps are just indentical copies of each other.
