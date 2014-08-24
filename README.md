@@ -13,10 +13,15 @@ This might be useful when you want to control multiple robots using Rviz (see [m
 [ROS Hydro](http://wiki.ros.org/hydro), [Catkin](http://wiki.ros.org/catkin): [topic_tools](http://wiki.ros.org/topic_tools), [tf](http://wiki.ros.org/tf) (see [package.xml](package.xml))
 
 ## Installation
-Clone and catkin_make
+Clone Repo:
 ```bash
+$ cd <catkin_ws>/src
 $ git clone https://github.com/MohitShridhar/namespace_mux.git
+```
+Resolve dependencies (in Ubuntu) & Compile:
+```bash
 $ cd <catkin_ws>
+$ rosdep install --from-paths src --ignore-src --rosdistro hydro -y
 $ catkin_make --pkg namespace_mux
 ```
 
